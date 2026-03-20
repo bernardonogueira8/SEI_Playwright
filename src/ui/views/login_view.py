@@ -31,7 +31,15 @@ class LoginView(ctk.CTkFrame):
         self.btn_login = ctk.CTkButton(self, text="Entrar", command=self.do_login)
         self.btn_login.pack(pady=20)
 
+        # Label de erro
+        self.error_label = ctk.CTkLabel(self, text="", text_color="red")
+        self.error_label.pack(pady=5)
+
     def do_login(self):
+        if not all([self.user_entry.get(), self.password_entry.get()]):
+            self.error_label.configure(text="Preencha todos os campos!")
+            return
+
         save_prefs(self.user_entry.get(), self.remember_var.get())
         self.master.resizable(True, True)  # Permite que a próxima tela cresça
         self.master.show_menu()
