@@ -1,15 +1,5 @@
 import customtkinter
 from playwright.sync_api import sync_playwright
-import os
-import json
-
-# Variáveis globais para os widgets
-user_entry = None
-password_entry = None
-title_entry = None
-content_text = None
-app = None
-CONFIG_FILE = "config_sei.json"
 
 
 def main():
@@ -166,55 +156,3 @@ def show_second_step():
         height=45,
         command=start_automation,
     ).pack(side="left", padx=10)
-
-
-def create_window():
-    global user_entry, password_entry, remember_var, app
-
-    customtkinter.set_appearance_mode("Dark")
-    app = customtkinter.CTk()
-
-    # --- LOGIN PEQUENO E CENTRALIZADO ---
-    app.geometry("400x500")
-    app.resizable(False, False)  # Trava o tamanho no login
-    app.title("Acesso SEI")
-
-    prefs = load_prefs()
-
-    customtkinter.CTkLabel(app, text="LOGIN", font=("Arial", 22, "bold")).pack(
-        pady=(40, 20)
-    )
-
-    customtkinter.CTkLabel(app, text="Usuário:").pack(anchor="w", padx=50)
-    user_entry = customtkinter.CTkEntry(app, width=300, height=35)
-    user_entry.insert(0, prefs.get("user", ""))
-    user_entry.pack(pady=5)
-
-    customtkinter.CTkLabel(app, text="Senha:").pack(anchor="w", padx=50)
-    password_entry = customtkinter.CTkEntry(app, width=300, height=35, show="*")
-    password_entry.pack(pady=5)
-
-    remember_var = customtkinter.BooleanVar(value=prefs.get("remember", False))
-    customtkinter.CTkCheckBox(app, text="Lembrar usuário", variable=remember_var).pack(
-        pady=15
-    )
-
-    def login_click():
-        save_prefs(user_entry.get(), remember_var.get())
-        app.resizable(True, True)  # Permite que a próxima tela cresça
-        show_second_step()
-
-    customtkinter.CTkButton(
-        app,
-        text="ENTRAR",
-        width=300,
-        height=40,
-        font=("Arial", 13, "bold"),
-        command=login_click,
-    ).pack(pady=20)
-
-    app.mainloop()
-
-
-if __name__ == "__main__":
-    main()
