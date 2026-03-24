@@ -1,25 +1,3 @@
-import customtkinter
-from playwright.sync_api import sync_playwright
-
-
-def main():
-    create_window()
-
-
-def start_automation():
-    # Coleta os dados das duas etapas
-    usuario = user_entry.get()
-    senha = password_entry.get()
-    titulo = title_entry.get()
-    conteudo = content_text.get("1.0", "end-1c")
-
-    if not all([usuario, senha, titulo, conteudo]):
-        print("Erro: Todos os campos são obrigatórios!")
-        return
-
-    run_playwright(usuario, senha, titulo, conteudo)
-
-
 def run_playwright(user, password, title, content):
     try:
         with sync_playwright() as p:
@@ -87,59 +65,32 @@ def run_playwright(user, password, title, content):
     except Exception as e:
         print(f"Erro: {e}")
 
-def show_second_step():
-    # --- MUDANÇA PARA FULLSCREEN AQUI ---
-    app.attributes("-fullscreen", True)
-    app.bind("<Escape>", lambda e: app.attributes("-fullscreen", False))
 
-    # Limpa a tela de login
-    for widget in app.winfo_children():
-        widget.destroy()
+def show_second_step():
 
     # Configuração de Grid para Texto Longo
     app.grid_columnconfigure(0, weight=1)
     app.grid_rowconfigure(4, weight=1)  # Faz o Textbox ocupar o centro
 
-    customtkinter.CTkLabel(
-        app,
-        text="REGISTRO DE DESPACHO - SEI BAHIA",
-        font=("Arial", 26, "bold"),
-        text_color="#3b8ed0",
-    ).grid(row=0, column=0, pady=(30, 20))
+    ctk
 
-    customtkinter.CTkLabel(
-        app, text="Título / Especificação:", font=("Arial", 14, "bold")
-    ).grid(row=1, column=0, padx=60, sticky="w")
+    ctk.CTkLabel(app, text="Título / Especificação:", font=("Arial", 14, "bold")).grid(
+        row=1, column=0, padx=60, sticky="w"
+    )
     global title_entry
-    title_entry = customtkinter.CTkEntry(
+    title_entry = ctk.CTkEntry(
         app, placeholder_text="Digite o título do processo...", height=40
     )
     title_entry.grid(row=2, column=0, padx=60, pady=(5, 20), sticky="ew")
 
-    customtkinter.CTkLabel(
-        app, text="Conteúdo do Despacho:", font=("Arial", 14, "bold")
-    ).grid(row=3, column=0, padx=60, sticky="w")
+    ctk.CTkLabel(app, text="Conteúdo do Despacho:", font=("Arial", 14, "bold")).grid(
+        row=3, column=0, padx=60, sticky="w"
+    )
     global content_text
-    content_text = customtkinter.CTkTextbox(
+    content_text = ctk.CTkTextbox(
         app, font=("Arial", 16), border_width=2, activate_scrollbars=True
     )
     content_text.grid(row=4, column=0, padx=60, pady=(5, 20), sticky="nsew")
 
-    btn_frame = customtkinter.CTkFrame(app, fg_color="transparent")
+    btn_frame = ctk.CTkFrame(app, fg_color="transparent")
     btn_frame.grid(row=5, column=0, pady=(0, 30))
-
-    customtkinter.CTkButton(
-        btn_frame,
-        text="Janela Normal",
-        fg_color="#555555",
-        command=lambda: app.attributes("-fullscreen", False),
-    ).pack(side="left", padx=10)
-
-    customtkinter.CTkButton(
-        btn_frame,
-        text="INICIAR AUTOMAÇÃO",
-        font=("Arial", 15, "bold"),
-        width=250,
-        height=45,
-        command=start_automation,
-    ).pack(side="left", padx=10)

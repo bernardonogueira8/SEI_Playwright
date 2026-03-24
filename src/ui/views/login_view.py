@@ -9,6 +9,7 @@ class LoginView(ctk.CTkFrame):
         self.master = master  # Referência para o AppWindow
         self.master.resizable(False, False)
         prefs = load_prefs()
+        
         # Variáveis exclusivas à instância, eliminando "global"
         self.login_label = ctk.CTkLabel(self, text="LOGIN", font=("Arial", 22, "bold"))
         self.login_label.pack(pady=(40, 20))
@@ -36,10 +37,15 @@ class LoginView(ctk.CTkFrame):
         self.error_label.pack(pady=5)
 
     def do_login(self):
-        if not all([self.user_entry.get(), self.password_entry.get()]):
+        user = self.user_entry.get().strip()
+        pwd = self.password_entry.get().strip()
+        if not all([user, pwd]):
             self.error_label.configure(text="Preencha todos os campos!")
             return
+        # Salvamos as credenciais no master para que outras telas acessem
+        self.master.logged_user = user
+        self.master.logged_pwd = pwd
 
-        save_prefs(self.user_entry.get(), self.remember_var.get())
+        save_prefs(user, self.remember_var.get())
         self.master.resizable(True, True)  # Permite que a próxima tela cresça
         self.master.show_menu()

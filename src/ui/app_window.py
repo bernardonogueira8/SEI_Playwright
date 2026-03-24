@@ -7,7 +7,7 @@ class AppWindow(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Automações SEI")
-        self.geometry("400x500")
+        self.geometry("500x500")
         self.current_frame = None
         self.show_login()  # Inicia pela tela de login
 
