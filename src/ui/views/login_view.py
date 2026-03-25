@@ -22,14 +22,17 @@ class LoginView(ctk.CTkFrame):
             anchor="w", padx=50
         )
         self.password_entry = ctk.CTkEntry(self, width=300, height=35, show="*")
+        self.password_entry.insert(0, prefs.get("pwd", ""))
         self.password_entry.pack(pady=5)
 
         self.remember_var = ctk.BooleanVar(value=prefs.get("remember", False))
         ctk.CTkCheckBox(self, text="Manter Conectado", variable=self.remember_var).pack(
             pady=15
         )
-        self.master.bind("<Return>", lambda e: self.do_login())  # Permite Enter para login
-        
+        self.master.bind(
+            "<Return>", lambda e: self.do_login()
+        )  # Permite Enter para login
+
         self.btn_login = ctk.CTkButton(self, text="Entrar", command=self.do_login)
         self.btn_login.pack(pady=20)
 

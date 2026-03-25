@@ -82,7 +82,9 @@ class TaskView(ctk.CTkFrame):
         content_ass = getattr(self.master, "logged_content_ass", "")
 
         t = threading.Thread(
-            target=self._worker, args=(user, pwd, title, content), daemon=True
+            target=self._worker,
+            args=(user, pwd, title, content, content_ass),
+            daemon=True,
         )
         t.start()
 
