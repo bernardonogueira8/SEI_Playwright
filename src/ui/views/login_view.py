@@ -28,7 +28,8 @@ class LoginView(ctk.CTkFrame):
         ctk.CTkCheckBox(self, text="Manter Conectado", variable=self.remember_var).pack(
             pady=15
         )
-
+        self.master.bind("<Return>", lambda e: self.do_login())  # Permite Enter para login
+        
         self.btn_login = ctk.CTkButton(self, text="Entrar", command=self.do_login)
         self.btn_login.pack(pady=20)
 
