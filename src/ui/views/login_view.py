@@ -9,7 +9,7 @@ class LoginView(ctk.CTkFrame):
         self.master = master  # Referência para o AppWindow
         self.master.resizable(False, False)
         prefs = load_prefs()
-        
+
         # Variáveis exclusivas à instância, eliminando "global"
         self.login_label = ctk.CTkLabel(self, text="LOGIN", font=("Arial", 22, "bold"))
         self.login_label.pack(pady=(40, 20))
@@ -25,7 +25,7 @@ class LoginView(ctk.CTkFrame):
         self.password_entry.pack(pady=5)
 
         self.remember_var = ctk.BooleanVar(value=prefs.get("remember", False))
-        ctk.CTkCheckBox(self, text="Lembrar usuário", variable=self.remember_var).pack(
+        ctk.CTkCheckBox(self, text="Manter Conectado", variable=self.remember_var).pack(
             pady=15
         )
 
@@ -46,6 +46,6 @@ class LoginView(ctk.CTkFrame):
         self.master.logged_user = user
         self.master.logged_pwd = pwd
 
-        save_prefs(user, self.remember_var.get())
+        save_prefs(user, pwd, self.remember_var.get())
         self.master.resizable(True, True)  # Permite que a próxima tela cresça
         self.master.show_menu()

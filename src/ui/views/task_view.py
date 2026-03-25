@@ -1,6 +1,6 @@
 import threading
 import customtkinter as ctk
-from automations.sei_automation import run_playwright
+from automations.SEI_DMA_automation import run_playwright
 
 
 class TaskView(ctk.CTkFrame):
